@@ -18,7 +18,7 @@ class App extends React.Component {
   }
 
   getClothes = () => {
-    console.log(this.state.getClothes)
+    console.log(this.state.inventory)
     axios
       .get("/api/products")
       .then(res => {

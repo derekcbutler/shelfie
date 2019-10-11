@@ -14,7 +14,8 @@ massive(CONNECTION_STRING).then(db => {
 
 app.get("/api/products", ctrl.getClothes);
 app.post("/api/products", ctrl.addClothes);
-//   app.put('/api/clothesList', ctrl.editClothes);
+app.put("/api/products", ctrl.editClothes);
+app.delete("/api/products", ctrl.deleteClothes);
 
 app.listen(SERVER_PORT, () => {
   console.log(`Running on port: ${SERVER_PORT}`);
