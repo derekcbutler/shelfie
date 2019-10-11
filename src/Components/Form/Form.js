@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 
 class Form extends React.Component {
   constructor() {
@@ -10,12 +11,31 @@ class Form extends React.Component {
     };
   }
 
-  handleCancel = () => {
-    this.setState({});
-  };
+  handleInput = (val) => {
+    this.setState({
+      name: val,
+      price: val,
+      imgurl: val
+    })
+  }
 
-  handleAdd = () => {
-    this.setState({});
+  // componentDidMount() {
+  //   this.addClothes();
+  // }
+
+  addClothes = () => {
+    const newClothes = {
+      name: this.state.inventory
+    };
+
+    axios
+      .post("/api/products", newClothes)
+      .then(res => {
+        this.setState({
+          inventory: res.data
+        });
+      })
+      .catch(err => console.log(err));
   };
 
   // handleChange = e => {
@@ -24,13 +44,14 @@ class Form extends React.Component {
   // };
 
   render() {
+    // console.log(this.props.addClothes)
     return (
       <div>
-        <input />
+        <input  />
         <input />
         <input />
         <button>Cancel</button>
-        <button>Add to Inventory</button>
+        <button onClick={() => this.state.handleAdd}>Add to Inventory</button>
       </div>
     );
   }

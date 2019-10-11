@@ -9,20 +9,33 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      inventory: [
-        { name: "Derek", price: 0, url: "yo.com" },
-        { name: "Tavas", price: 2, url: "sup.org" }
-      ]
+      inventory: []
     };
   }
 
-  // componentDidMount() {
-
-  //  }
+  componentDidMount() {
+    this.getClothes();
+  }
 
   getClothes = () => {
+    console.log(this.state.getClothes)
     axios
-      .get("/api/inventory")
+      .get("/api/products")
+      .then(res => {
+        this.setState({
+          inventory: res.data
+        });
+      })
+      .catch(err => console.log(err));
+  };
+
+  addClothes = () => {
+    const newClothes = {
+      name: this.state.inventory
+    };
+
+    axios
+      .post("/api/products", newClothes)
       .then(res => {
         this.setState({
           inventory: res.data
@@ -38,8 +51,12 @@ class App extends React.Component {
         <Dashboard
           inventory={this.state.inventory}
           getClothes={this.state.getClothes}
+          addClothes={this.state.addClothes}
         />
-        <Form />
+        <Form
+          inventory={this.state.inventory}
+          addClothes={this.state.addClothes}
+        />
       </div>
     );
   }

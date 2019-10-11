@@ -3,20 +3,17 @@ const express = require("express");
 const massive = require("massive");
 const ctrl = require("./controller");
 
+const { SERVER_PORT, CONNECTION_STRING } = process.env;
 const app = express();
 app.use(express.json());
 
-const { SERVER_PORT, CONNECTION_STRING } = process.env;
+massive(CONNECTION_STRING).then(db => {
+  app.set("db", db);
+  console.log("db connected");
+});
 
-massive(CONNECTION_STRING)
-  .then(db => {
-    app.set("db", db);
-    console.log("db connected");
-  })
-  .catch(err => console.log(err));
-
-  app.get('/api/clothesList', ctrl.getClothes);
-  app.post('/api/clothesList', ctrl.addClothes);
+app.get("/api/products", ctrl.getClothes);
+app.post("/api/products", ctrl.addClothes);
 //   app.put('/api/clothesList', ctrl.editClothes);
 
 app.listen(SERVER_PORT, () => {
