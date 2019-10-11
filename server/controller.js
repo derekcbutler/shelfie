@@ -41,7 +41,7 @@ module.exports = {
       .get("db")
       .delete_inventory({name, price, url})
       .then(products => {
-        res.sendStatus(200);
+        res.sendStatus(200).send(products);
       })
       .catch(err => res.status(500).send(err));
   }
